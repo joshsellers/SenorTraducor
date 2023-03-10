@@ -12,17 +12,6 @@ translator = Translator()
 client = discord.Client(intents=discord.Intents.all())
 
 
-def check_only_emoji(content):
-    if content.endswith("️j"):
-        return True
-
-    for char in content:
-        if not emoji.is_emoji(char) and not content.isspace():
-            return False
-    return True
-
-
-
 @client.event
 async def on_ready():
     print(f'{client.user} has connected to Discord')
