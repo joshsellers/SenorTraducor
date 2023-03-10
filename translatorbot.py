@@ -39,7 +39,7 @@ async def on_message(message):
     data = translator._translate(text, 'auto', 'es')
     print(f"detected language: {data[0][0][1]}")
     if not text.isnumeric() and data[0][0][1] == 'en':
-        await message.reply(f"{message.author} dijo: {data[0][0][0]}")
+        await message.reply(f"{message.author.name} dijo: {data[0][0][0]}")
     else:
         print("did not translate because message is either only emoji, only numbers, or is not English")
 
