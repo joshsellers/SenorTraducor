@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 import os
 import discord
 import emoji
+from pygoogletranslation import LANGUAGES
 
 load_dotenv()
 token = os.getenv('DISCORD_TOKEN')
@@ -37,7 +38,7 @@ async def on_message(message):
         return
 
     data = translator._translate(text, 'auto', 'es')
-    print(f"detected language: {data[0][0][1]}")
+    print(f"detected language: {LANGUAGES[data[0][0][1]]}")
     if not text.isnumeric() and data[0][0][1] == 'en':
         await message.reply(f"{message.author.name} dijo: {data[0][0][0]}")
     else:
