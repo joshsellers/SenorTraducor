@@ -25,13 +25,25 @@ async def on_disconnect():
 
 @client.event
 async def on_message(message):
+    if message.author == client.user:
+        return
+
+    if message.reference is not None:
+        if message.reference.resolved.author.id == client.user.id:
+            await message.reply(f'Perdóneme q soy medio pendejo')
+            return
+
+    if '@1083650431156232313' in message.content:
+        await message.reply(f'Perdóneme q soy medio pendejo')
+        return
+    elif '<@' in message.content:
+        return
+
     if message.content.lower() == "$leave":
         exit()
 
     text = emoji.replace_emoji(message.content, " ")
     print(f'{message.author}: {message.content}')
-    if message.author == client.user:
-        return
 
     if text.startswith("+") or message.author.id == 228537642583588864:
         print("message is a bot command, ignoring", end="\n\n")
