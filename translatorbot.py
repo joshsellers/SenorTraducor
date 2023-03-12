@@ -23,8 +23,15 @@ async def on_disconnect():
     print('disconnecting')
 
 
+ignored_words = [
+    'yo', 'holi', 'holis', 'mmm', 'mm', 'mmmm',
+    'anto', 'zay', 'karol', '...', 'josh', 'siri', '…'
+]
+
+
 @client.event
 async def on_message(message):
+    print(f'{message.author}: {message.content}')
     if message.author == client.user:
         return
 
@@ -33,7 +40,7 @@ async def on_message(message):
             await message.reply(f'Perdóneme q soy medio pendejo')
             return
 
-    if '@1083650431156232313' in message.content:
+    if '@1083650431156232313' in message.content or 'pelón' in message.content or 'calvo' in message.content:
         await message.reply(f'Perdóneme q soy medio pendejo')
         return
     elif '<@' in message.content:
@@ -43,7 +50,10 @@ async def on_message(message):
         exit()
 
     text = emoji.replace_emoji(message.content, " ")
-    print(f'{message.author}: {message.content}')
+    for word in ignored_words:
+        if text.lower() == word:
+            print("message is a word in the ignored words list, ignoring")
+            return
 
     if text.startswith("+") or message.author.id == 228537642583588864:
         print("message is a bot command, ignoring", end="\n\n")
