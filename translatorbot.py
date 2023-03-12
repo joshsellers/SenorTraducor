@@ -40,7 +40,8 @@ async def on_message(message):
             await message.reply(f'Perdóneme q soy medio pendejo')
             return
 
-    if '@1083650431156232313' in message.content or 'pelón' in message.content or 'calvo' in message.content:
+    if '@1083650431156232313' in message.content or 'pelón' in message.content or 'calvo' in message.content \
+            or 'pelon' in message.content:
         await message.reply(f'Perdóneme q soy medio pendejo')
         return
     elif '<@' in message.content:
