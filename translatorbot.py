@@ -62,7 +62,7 @@ async def on_message(message):
     text = emoji.replace_emoji(message.content, " ")
     for word in ignored_words:
         if text.lower() == word:
-            print("message is a word in the ignored words list, ignoring")
+            print("message is a word in the ignored words list, ignoring", end="\n\n")
             return
 
     if text.startswith("+") or message.author.id == 228537642583588864:
@@ -72,7 +72,7 @@ async def on_message(message):
     data = translator._translate(text, 'auto', 'es')
     print(f"detected language: {LANGUAGES[data[0][0][1]]}")
     if contains_vowels(text) and not text.isnumeric() and data[0][0][1] == 'en':
-        await message.reply(f"{message.author.name} dijo: {data[0][0][0]}")
+        await message.reply(f"**{message.author.name} dijo:** {data[0][0][0]}")
     else:
         print("did not translate because message is either only numbers or is not English")
 
