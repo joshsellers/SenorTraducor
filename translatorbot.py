@@ -4,6 +4,9 @@ import os
 import discord
 import emoji
 from pygoogletranslation import LANGUAGES
+import re
+
+VERSION = '1.0'
 
 load_dotenv()
 token = os.getenv('DISCORD_TOKEN')
@@ -13,9 +16,14 @@ translator = Translator()
 client = discord.Client(intents=discord.Intents.all())
 
 
+def contains_vowels(content):
+    text = content.lower()
+    return len(re.findall("a|e|i|o|u", text)) > 0
+
+
 @client.event
 async def on_ready():
-    print(f'{client.user} has connected to Discord')
+    print(f'{client.user} v{VERSION} has connected to Discord')
 
 
 @client.event
@@ -25,7 +33,8 @@ async def on_disconnect():
 
 ignored_words = [
     'yo', 'holi', 'holis', 'mmm', 'mm', 'mmmm',
-    'anto', 'zay', 'karol', '...', 'josh', 'siri', '…'
+    'anto', 'zay', 'karol', '...', 'josh', 'siri', '…',
+    'sip', 'si'
 ]
 
 
@@ -62,10 +71,10 @@ async def on_message(message):
 
     data = translator._translate(text, 'auto', 'es')
     print(f"detected language: {LANGUAGES[data[0][0][1]]}")
-    if not text.isnumeric() and data[0][0][1] == 'en':
+    if contains_vowels(text) and not text.isnumeric() and data[0][0][1] == 'en':
         await message.reply(f"{message.author.name} dijo: {data[0][0][0]}")
     else:
-        print("did not translate because message is either only emoji, only numbers, or is not English")
+        print("did not translate because message is either only numbers or is not English")
 
     print("")
 
