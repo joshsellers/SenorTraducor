@@ -5,6 +5,7 @@ import discord
 import emoji
 from pygoogletranslation import LANGUAGES
 import re
+import random
 
 VERSION = '1.0'
 
@@ -39,9 +40,27 @@ ignored_words = [
 ]
 
 ingored_contained_words = [
-    'gracias', 'bueno, seas, sea', 'los', 'lo', 'noo', 'no', 'nooo', 'juan',
+    'gracias', 'bueno, seas, sea', 'los', 'lo', 'noo ', 'no ', 'nooo', 'juan',
     'vale'
 ]
+
+apologies = [
+    "Lo siento, mi cerebro es un burrito sin frijoles.",
+    "Perdóneme, a veces mi cabeza está en las nubes.",
+    "Disculpa, estoy más perdido que un calcetín en la lavadora.",
+    "Lo siento, soy más lento que un caracol con resaca.",
+    "Perdóneme, mi inteligencia a veces es más baja que un caracol sin concha.",
+    "Disculpa, mi cabeza es como un agujero negro, atrae toda la tontería.",
+    "Lo siento, soy tan tonto que necesito un GPS para encontrar mi cerebro.",
+    "Perdóneme, mi cerebro es como un plato de espagueti, todo revuelto.",
+    "Disculpa, a veces soy más despistado que un pez en la montaña.",
+    "Lo siento, mi capacidad intelectual a veces es inferior a la de un pato de goma.",
+    "Perdóneme q soy medio pendejo"
+]
+
+
+def random_apology():
+    return random.choice(apologies)
 
 
 @client.event
@@ -52,13 +71,13 @@ async def on_message(message):
 
     if message.reference is not None:
         if message.reference.resolved.author.id == client.user.id:
-            await message.reply(f'Perdóneme q soy medio pendejo')
+            await message.reply(random_apology())
             return
 
     msgLower = message.content.lower()
     if '@1083650431156232313' in msgLower or 'pelón' in msgLower or 'calvo' in msgLower \
             or 'pelon' in msgLower or 'señor traductor' in msgLower:
-        await message.reply(f'Perdóneme q soy medio pendejo')
+        await message.reply(random_apology())
         return
     elif '<@' in message.content:
         return
@@ -89,5 +108,6 @@ async def on_message(message):
         print("did not translate because message is either only numbers or is not English")
 
     print("")
+
 
 client.run(token)
