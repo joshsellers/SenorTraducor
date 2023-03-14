@@ -34,7 +34,11 @@ async def on_disconnect():
 ignored_words = [
     'yo', 'holi', 'holis', 'mmm', 'mm', 'mmmm',
     'anto', 'zay', 'karol', '...', 'josh', 'siri', '…',
-    'sip', 'si'
+    'sip', 'si', 'bueno', 'gracias'
+]
+
+ingored_contained_words = [
+    'gracias', 'bueno'
 ]
 
 
@@ -49,8 +53,9 @@ async def on_message(message):
             await message.reply(f'Perdóneme q soy medio pendejo')
             return
 
-    if '@1083650431156232313' in message.content or 'pelón' in message.content or 'calvo' in message.content \
-            or 'pelon' in message.content:
+    msgLower = message.content.lower()
+    if '@1083650431156232313' in msgLower or 'pelón' in msgLower or 'calvo' in msgLower \
+            or 'pelon' in msgLower or 'señor traductor' in msgLower:
         await message.reply(f'Perdóneme q soy medio pendejo')
         return
     elif '<@' in message.content:
@@ -63,6 +68,11 @@ async def on_message(message):
     for word in ignored_words:
         if text.lower() == word:
             print("message is a word in the ignored words list, ignoring", end="\n\n")
+            return
+
+    for word in ingored_contained_words:
+        if word in text.lower():
+            print("message contains a ignored word, ignoring", end="\n\n")
             return
 
     if text.startswith("+") or message.author.id == 228537642583588864:
