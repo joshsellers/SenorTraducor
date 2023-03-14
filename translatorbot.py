@@ -34,7 +34,7 @@ async def on_disconnect():
 ignored_words = [
     'yo', 'holi', 'holis', 'mmm', 'mm', 'mmmm',
     'anto', 'zay', 'karol', '...', 'josh', 'siri', '…',
-    'sip', 'si', 'bueno', 'gracias', 'seas', 'sea'
+    'sip', 'si', 'bueno', 'gracias', 'seas', 'sea', 'vale'
 ]
 
 ingored_contained_words = [
