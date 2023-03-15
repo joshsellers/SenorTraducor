@@ -1,13 +1,12 @@
-from pygoogletranslation import Translator
+from pygoogletranslation import Translator, LANGUAGES
 from dotenv import load_dotenv
 import os
 import discord
 import emoji
-from pygoogletranslation import LANGUAGES
 import re
 import random
 
-VERSION = '1.0'
+VERSION = '1.2'
 
 load_dotenv()
 token = os.getenv('DISCORD_TOKEN')
@@ -40,8 +39,8 @@ ignored_words = [
 ]
 
 ingored_contained_words = [
-    'gracias', 'bueno, seas, sea', 'los', 'lo', 'noo ', 'no ', 'nooo', 'juan',
-    'vale'
+    'gracias', 'bueno', 'seas', 'sea', 'los ', 'lo ', 'noo ', 'no ', 'nooo', 'juan ',
+    'vale '
 ]
 
 apologies = [
@@ -80,6 +79,7 @@ async def on_message(message):
         await message.reply(random_apology())
         return
     elif '<@' in message.content:
+        print("ignored because message tags another user")
         return
 
     if message.content.lower() == "$leave":
