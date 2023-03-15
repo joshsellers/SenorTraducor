@@ -6,7 +6,9 @@ import emoji
 import re
 import random
 
-VERSION = '1.2'
+VERSION = '1.3'
+
+DEBUG_MODE = False
 
 load_dotenv()
 token = os.getenv('DISCORD_TOKEN')
@@ -62,15 +64,23 @@ def random_apology():
     return random.choice(apologies)
 
 
+async def send_reply(message, response):
+    if not DEBUG_MODE:
+        await message.reply(response)
+    else:
+        print("REPLY (DEBUG): " + response)
+
+
 @client.event
 async def on_message(message):
+    global DEBUG_MODE
     print(f'{message.author}: {message.content}')
     if message.author == client.user:
         return
 
     if message.reference is not None:
         if message.reference.resolved.author.id == client.user.id:
-            await message.reply(random_apology())
+            await send_reply(message, random_apology())
             return
 
     msgLower = message.content.lower()
@@ -84,6 +94,9 @@ async def on_message(message):
 
     if message.content.lower() == "$leave":
         exit()
+    elif message.content.lower() == "$toggledebug":
+        DEBUG_MODE = not DEBUG_MODE
+        print('DEBUG_MODE set to ' + str(DEBUG_MODE))
 
     text = emoji.replace_emoji(message.content, " ")
     for word in ignored_words:
@@ -103,7 +116,7 @@ async def on_message(message):
     data = translator._translate(text, 'auto', 'es')
     print(f"detected language: {LANGUAGES[data[0][0][1]]}")
     if contains_vowels(text) and not text.isnumeric() and data[0][0][1] == 'en':
-        await message.reply(f"**{message.author.name} dijo:** {data[0][0][0]}")
+        await send_reply(message, f"**{message.author.name} dijo:** {data[0][0][0]}")
     else:
         print("did not translate because message is either only numbers or is not English")
 
