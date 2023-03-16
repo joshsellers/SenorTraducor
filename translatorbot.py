@@ -6,7 +6,7 @@ import emoji
 import re
 import random
 
-VERSION = '1.8'
+VERSION = '1.9'
 
 DEBUG_MODE = False
 
@@ -84,13 +84,6 @@ async def on_message(message):
             return
 
     msgLower = message.content.lower()
-    if '@1083650431156232313' in msgLower or 'pelón' in msgLower or 'calvo' in msgLower \
-            or 'pelon' in msgLower or 'señor traductor' in msgLower:
-        await message.reply(random_apology())
-        return
-    elif '<@' in message.content:
-        print("ignored because message tags another user")
-        return
 
     if message.content.lower() == "$leave":
         exit()
@@ -98,11 +91,21 @@ async def on_message(message):
         DEBUG_MODE = not DEBUG_MODE
         print('DEBUG_MODE set to ' + str(DEBUG_MODE))
         return
-    elif message.content.lower() == "cállate pelón" or message.content.lower() == 'callate pelon':
+    elif message.content.lower() == "cállate pelón" or message.content.lower() == 'callate pelon' \
+            or msgLower == "cállate pelon":
         DEBUG_MODE = True
     elif msgLower == "habla pelon" or msgLower == "habla pelón" or "pelon donde estas" in msgLower \
-            or "pelón dónde estás" in msgLower:
+            or "pelón dónde estás" in msgLower or msgLower == "halba pelon" \
+            or msgLower == "pelon dónde estás":
         DEBUG_MODE = False
+
+    if '@1083650431156232313' in msgLower or 'pelón' in msgLower or 'calvo' in msgLower \
+            or 'pelon' in msgLower or 'señor traductor' in msgLower:
+        await message.reply(random_apology())
+        return
+    elif '<@' in message.content:
+        print("ignored because message tags another user")
+        return
 
     text = emoji.replace_emoji(message.content, " ")
     for word in ignored_words:
