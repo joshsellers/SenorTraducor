@@ -6,7 +6,7 @@ import emoji
 import re
 import random
 
-VERSION = '1.3'
+VERSION = '1.6'
 
 DEBUG_MODE = False
 
@@ -37,12 +37,12 @@ ignored_words = [
     'yo', 'holi', 'holis', 'mmm', 'mm', 'mmmm',
     'anto', 'zay', 'karol', '...', 'josh', 'siri', '…',
     'sip', 'si', 'bueno', 'gracias', 'seas', 'sea', 'vale',
-    'juan'
+    'juan', 'lo', 'ok', 'ok.', 'okay', 'okey'
 ]
 
 ingored_contained_words = [
     'gracias', 'bueno', 'seas', 'sea', 'los ', 'lo ', 'noo ', 'no ', 'nooo', 'juan ',
-    'vale '
+    'vale ', 'ok '
 ]
 
 apologies = [
@@ -97,6 +97,7 @@ async def on_message(message):
     elif message.content.lower() == "$toggledebug":
         DEBUG_MODE = not DEBUG_MODE
         print('DEBUG_MODE set to ' + str(DEBUG_MODE))
+        return
 
     text = emoji.replace_emoji(message.content, " ")
     for word in ignored_words:
@@ -106,7 +107,7 @@ async def on_message(message):
 
     for word in ingored_contained_words:
         if word in text.lower():
-            print("message contains a ignored word, ignoring", end="\n\n")
+            print(f"message contains ignored word '{word}', ignoring", end="\n\n")
             return
 
     if text.startswith("+") or message.author.id == 228537642583588864:
