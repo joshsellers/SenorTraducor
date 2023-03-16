@@ -6,7 +6,7 @@ import emoji
 import re
 import random
 
-VERSION = '1.9'
+VERSION = '1.95'
 
 DEBUG_MODE = False
 
@@ -94,10 +94,14 @@ async def on_message(message):
     elif message.content.lower() == "cállate pelón" or message.content.lower() == 'callate pelon' \
             or msgLower == "cállate pelon":
         DEBUG_MODE = True
+        print('DEBUG_MODE set to ' + str(DEBUG_MODE))
+        return
     elif msgLower == "habla pelon" or msgLower == "habla pelón" or "pelon donde estas" in msgLower \
             or "pelón dónde estás" in msgLower or msgLower == "halba pelon" \
             or msgLower == "pelon dónde estás":
         DEBUG_MODE = False
+        print('DEBUG_MODE set to ' + str(DEBUG_MODE))
+        return
 
     if '@1083650431156232313' in msgLower or 'pelón' in msgLower or 'calvo' in msgLower \
             or 'pelon' in msgLower or 'señor traductor' in msgLower:
