@@ -6,7 +6,7 @@ import emoji
 import re
 import random
 
-VERSION = '1.7'
+VERSION = '1.8'
 
 DEBUG_MODE = False
 
@@ -98,6 +98,11 @@ async def on_message(message):
         DEBUG_MODE = not DEBUG_MODE
         print('DEBUG_MODE set to ' + str(DEBUG_MODE))
         return
+    elif message.content.lower() == "cállate pelón" or message.content.lower() == 'callate pelon':
+        DEBUG_MODE = True
+    elif msgLower == "habla pelon" or msgLower == "habla pelón" or "pelon donde estas" in msgLower \
+            or "pelón dónde estás" in msgLower:
+        DEBUG_MODE = False
 
     text = emoji.replace_emoji(message.content, " ")
     for word in ignored_words:
