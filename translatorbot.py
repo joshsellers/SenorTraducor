@@ -6,7 +6,7 @@ import emoji
 import re
 import random
 
-VERSION = '1.6'
+VERSION = '1.7'
 
 DEBUG_MODE = False
 
